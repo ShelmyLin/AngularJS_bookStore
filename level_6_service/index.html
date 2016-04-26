@@ -1,0 +1,38 @@
+<html ng-app = "bookStore">  
+<head>
+	<title> Angular JS Demo</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" /> 
+</head>
+<script type="text/javascript" src="angular.min.js"></script> 
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="products.js"></script>  
+
+
+<body>
+<div ng-controller = "StoreController as store">
+<div >
+	<p>This is an example of AngularJS by linxiongmin@gmail.com</p>
+</div>
+<div ng-repeat = "book in store.product | limitTo: 5 | orderBy: 'price'">
+
+<ul class="list-group">
+	
+	<li class="list-group-item" > 
+
+		<h3 product-title>  
+		</h3>
+		<img ng-src="{{book.image}}" /><br>
+
+	</li>
+
+	<product-panel> </product-panel>
+
+</ul>
+		
+
+</div>
+</div>
+
+</body>
+</html>
+

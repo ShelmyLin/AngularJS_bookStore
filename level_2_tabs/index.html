@@ -1,0 +1,68 @@
+<html ng-app = "bookStore">  
+<head>
+	<title> Angular JS Demo</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" /> 
+</head>
+<script type="text/javascript" src="angular.min.js"></script> 
+<script type="text/javascript" src="app.js"></script>
+<body>
+<div ng-controller = "StoreController as store">
+<div >
+	<p>This is an example of AngularJS by linxiongmin@gmail.com</p>
+</div>
+<div ng-repeat = "book in store.product | limitTo: 5 | orderBy: 'price'">
+
+<ul class="list-group">
+	
+	<li class="list-group-item" > 
+		<!-- limitTo 限制repeat几次 -->
+		<!-- orderBy 排序，'-price'反序大到小，'price' 正序小到大-->
+		<h3>
+			{{book.name | uppercase}}     <!-- uppercase大写  -->
+			<em class="pull-right">  {{book.price | currency}}</em>
+		</h3>
+		<img ng-src="{{book.image}}" /><br>
+
+	</li>
+
+	<div ng-controller = "PanelController as panel">
+	<!-- <div> -->
+
+		<ul class="nav nav-pills">
+			<li ng-class = "{ active: panel.isSelect(1)}">
+				<a href ng-click = "panel.selectTab(1)"> Description </a>
+			</li>
+			<li ng-class = "{ active: panel.isSelect(2)}">
+				<a href ng-click = "panel.selectTab(2)"> Specifications </a>
+			</li>
+			<li ng-class = "{ active: panel.isSelect(3)}">
+				<a href ng-click = "panel.selectTab(3)"> Reviews </a>
+			</li>
+		</ul>
+		<div class = "panel" ng-show="panel.isSelect(1)">
+			<p>{{book.description}}</p>
+			<!-- {{"hello" + store.tab}} --> <!--这样数据出不来-->
+		</div>
+
+		<div class = "panel" ng-show="panel.isSelect(2)">
+			<p>{{book.specification}}</p>
+			
+		</div>
+
+		<div class = "panel" ng-show="panel.isSelect(3)">
+			<p>{{book.review}}</p>
+			
+		</div>
+		<button ng-show="book.available"> Buy it now!</button>
+
+	</div>	
+
+</ul>
+		
+
+</div>
+</div>
+
+</body>
+</html>
+

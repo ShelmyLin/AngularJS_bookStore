@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title> Angular JS Demo</title>
+</head>
+<script type="text/javascript" src="angular.min.js"></script> 
+<script type="text/javascript" src="app.js"></script>
+<body ng-app = "store">
+
+<div ng-controller = "StoreController as store">
+	<p>This is an example of AngularJS by linxiongmin@gmail.com</p>
+
+<div ng-repeat = "book in store.product">
+	
+	<h1>{{book.name}}</h1>
+	<h2>{{book.price | currency}}</h2>
+	<p>{{book.comment}}</p>
+
+	<button ng-show="book.available"> Buy it now!</button>
+
+</div>
+</div>
+
+</body>
+</html>
+

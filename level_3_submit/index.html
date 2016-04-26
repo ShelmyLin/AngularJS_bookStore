@@ -1,0 +1,100 @@
+<html ng-app = "bookStore">  
+<head>
+	<title> Angular JS Demo</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" /> 
+</head>
+<script type="text/javascript" src="angular.min.js"></script> 
+<script type="text/javascript" src="app.js"></script>
+<body>
+<div ng-controller = "StoreController as store">
+<div >
+	<p>This is an example of AngularJS by linxiongmin@gmail.com</p>
+</div>
+<div ng-repeat = "book in store.product | limitTo: 5 | orderBy: 'price'">
+
+<ul class="list-group">
+	
+	<li class="list-group-item" > 
+		<!-- limitTo 限制repeat几次 -->
+		<!-- orderBy 排序，'-price'反序大到小，'price' 正序小到大-->
+		<h3>
+			{{book.name | uppercase}}     <!-- uppercase大写  -->
+			<em class="pull-right">  {{book.price | currency}}</em>
+		</h3>
+		<img ng-src="{{book.image}}" /><br>
+
+	</li>
+
+	<div ng-controller = "PanelController as panel">
+	<!-- <div> -->
+
+		<ul class="nav nav-pills">
+			<li ng-class = "{ active: panel.isSelect(1)}">
+				<a href ng-click = "panel.selectTab(1)"> Description </a>
+			</li>
+			<li ng-class = "{ active: panel.isSelect(2)}">
+				<a href ng-click = "panel.selectTab(2)"> Specifications </a>
+			</li>
+			<li ng-class = "{ active: panel.isSelect(3)}">
+				<a href ng-click = "panel.selectTab(3)"> Reviews </a>
+			</li>
+		</ul>
+
+		<div class = "panel" ng-show="panel.isSelect(1)">
+			<p>{{book.description}}</p>
+			<!-- {{"hello" + store.tab}} --> <!--这样数据出不来-->
+		</div>
+
+		<div class = "panel" ng-show="panel.isSelect(2)">
+			<p>{{book.specification}}</p>
+			
+		</div>
+
+		<div class = "panel" ng-show="panel.isSelect(3)" >
+			<blockquote ng-repeat="review in book.reviews">
+				<p> {{"Stars: " + review.stars}}</p>
+				<p> {{"Comment: " + review.body}}</p>
+				<cite> {{"- By " + review.author + " at " + review.date}} </cite>
+			</blockquote>
+
+			<!-- 信息交互  -->
+			<form name="reviewForm" ng-controller = "ReviewController as reviewCtrl"
+									ng-submit = "reviewForm.$valid && reviewCtrl.addReview(book)" novalidate>
+				<blockquote>
+					<b> {{"Stars: " +  reviewCtrl.review.stars}}</b> 
+					<!-- reviewCtrl.review.stars需要和下面ng-model里的变量一致才可以双向同步，注意得在reviewForm作用域内 -->
+					<p> {{"Comment: " + reviewCtrl.review.body}}</p>
+					<cite> {{"- By " + reviewCtrl.review.author + " at " + review.date}} </cite>
+				</blockquote>
+
+				<select ng-model = "reviewCtrl.review.stars" required> <!-- 这里涉及到ng-model的使用  -->
+					<option value="1"> 1 star</option>
+					<option value="2"> 2 stars</option>
+					<option value="3"> 3 stars</option>
+					<option value="4"> 4 stars</option>
+					<option value="5"> 5 stars</option>
+				</select><br>
+				<textarea ng-model = "reviewCtrl.review.body" required></textarea><br>
+				<label>by:</label>
+				<input ng-model = "reviewCtrl.review.author" type = "email" required /><br>
+				<input type = "submit" value = "Submit" /> <br>
+				<input ng-model = "review.terms" type = "checkbox" /> I agree with that <br> <!--复选框-->
+				<input ng-model = "review.color" type = "radio" value = "red" /> Red <!--单选框-->
+				<div> reviewForm is {{reviewForm.$valid}} </div> 
+
+			</form>
+			
+		</div>
+		<button ng-show="book.available"> Buy it now!</button>
+
+	</div>	
+
+</ul>
+		
+
+</div>
+</div>
+
+</body>
+</html>
+

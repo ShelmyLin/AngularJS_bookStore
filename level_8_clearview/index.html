@@ -1,0 +1,67 @@
+<html ng-app = "bookStoreUi">  
+<head>
+	<title> Angular JS Demo</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" /> 
+	<link rel="stylesheet" type="text/css" href="ng-table.min.css" /> 
+</head>
+<script type="text/javascript" src="angular.min.js"></script> 
+<script type="text/javascript" src="ng-table.min.js"></script>
+
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="bookStore.controller.js"></script>
+<!-- <script type="text/javascript" src="bookStoreService.js"></script>  -->
+<script type="text/javascript" src="products.js"></script>  
+<body>
+<div ng-controller = "StoreController as store">
+<div >
+	<p>This is an example of AngularJS by linxiongmin@gmail.com</p>
+</div>
+
+<!-- ng-table example -->
+<div>
+
+<table ng-table="store.bookTable" class="table" show-filter="true">
+	<tr ng-repeat = "row in $data">
+
+		<td title = "'name'" filter="{name: 'text'}" sortable="'name'">
+			{{row.name}}
+		</td>
+		<td title = "'price'" filter="{price: 'number'}" sortable="'price'">
+			{{row.price}}
+		</td>
+		<td title = "'count'" filter="{count: 'number'}" sortable="'count'">
+			{{row.count}}
+		</td>
+		<td title = "'description'" filter="{description: 'text'}" sortable="'description'">
+			{{row.description}}
+		</td>
+		<td title = "'specification'" filter="{specification: 'text'}" sortable="'specification'">
+			{{row.specification}}
+		</td>
+
+	</tr>
+</table>
+
+</div>
+
+
+<div ng-repeat = "book in store.product | limitTo: 5 | orderBy: 'price'">
+
+<ul class="list-group">
+	
+	<li class="list-group-item" > 
+		<h3 product-title>  </h3>
+		<img ng-src="{{book.image}}"/> <br>
+	</li>
+
+	<product-panel> </product-panel>
+
+</ul>
+		
+</div>
+
+</div>
+
+</body>
+</html>
+

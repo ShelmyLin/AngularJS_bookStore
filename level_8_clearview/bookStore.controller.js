@@ -1,49 +1,36 @@
 console.log("bookStore.controller start");
 (function(){
 	console.log("data1");
-	// angular.module('bookStoreUi', ['ngTable','store-products', 'bookStoreService'])
-	// 	.controller('StoreController', StoreController);
-
-	angular.module('bookStoreUi', ['ngTable','store-products'])
+	angular.module('bookStoreUi', ['ngTable','store-products', 'bookStore-service'])
 		.controller('StoreController', StoreController);
 
-	//StoreController.$inject = ['$http', 'NgTableParams', 'bookStoreService'];
-	StoreController.$inject = ['$http', 'NgTableParams'];
+	StoreController.$inject = ['$http', 'NgTableParams','bookStoreService'];
 
-	// function StoreController($http, NgTableParams, bookStoreService)
-	function StoreController($http, NgTableParams){   // ????? 这句不能
-		console.log("---->>>> go to here ");  // 这个显示不出来，而level_7项目中，这里可以打印出来，说明上面这句注入有问题。
+	function StoreController($http, NgTableParams, bookStoreService){   
+		console.log("---->>>> go to here ");  // 这个显示不出来，而level_7项目中，这里可以打印出来，说明上面这句注入有问题。 解决：bookStoreService的声明有问题
 		var store = this;
 		store.product = [ ];
-		// 注意json文件的格式，变量名需要加""
-		$http.get('books.json').success(function(data){
-			store.product = data;
-			console.log("after get json: " + store.product);
-			store.bookTable = createTable(data);
-			console.log("after createTable: " + data);
-		});
+
+		// //注意json文件的格式，变量名需要加""
+		// $http.get('books.json').success(function(data){
+		// 	store.product = data;
+		// 	console.log("after get json: " + store.product);
+		// 	store.bookTable = createTable(data);
+		// 	console.log("after createTable: " + data);
+		// });
 		
-		// bookStoreService.getBooksInfo().then(function(data){
 
-		// 		store.product = data;
-		// 		store.bookTable = createTable(data);
-		// 		console.log(data);
-		// 	}, function(error){
+		store.product = bookStoreService.getBooksInfo();
+		console.log(store.product.length);
+		store.bookTable = createTable(store.product);
+		// create table 这里store.product为空，是因为上面的service数据还没回来。使用resolve解决。
 
-		// 	}
-		// );
-
-		// var result = bookStoreService.delBooksInfo("hello");
-		// console.log("delBooksInfo: " + result);
 
 		// page setting
 		var initpageSize = Number(localStorage.getItem('page_size') || 20);
 		store.pageSize   = initpageSize;
 		store.pageSizes  = [10, 20, 30, 50, 100];
 
-		// create table 这里store.product为空，是因为上面的$http.get，数据还没回来。使用resolve解决。
-		// store.bookTable  = createTable(store.product);
-		// console.log("after createTable 2: " + store.product);
 
 		function createTable(data){
 			var initParams = {
@@ -58,6 +45,16 @@ console.log("bookStore.controller start");
       		};
       		return new NgTableParams(initParams, initSettings);
 		}
+
+		function sleep(milliseconds) {
+			console.log("i will sleep for " + milliseconds + " milliseconds");
+  			var start = new Date().getTime();
+  			for (var i = 0; i < 1e7; i++) {
+   			if ((new Date().getTime() - start) > milliseconds){
+      			break;
+    		}
+  		}
+}
 
 
 	}

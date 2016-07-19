@@ -1,3 +1,0 @@
-2016-04-29 20:00 hello, this is Xiongmin LIN, i just add a file in my newTest branch, very exciting.
-
-2016-04-29 22:00 hello again, the administrator just deny my merge request, cause there are some bugs in my code

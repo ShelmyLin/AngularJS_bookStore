@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title> Angular JS Demo</title>
+</head>
+<script type="text/javascript" src="js/angular.min.js"></script> 
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript" src="js/highcharts-ng.js"></script>
+
+<body ng-app = "bookStore">
+<div ng-controller = "StoreController as vm">
+  <p>This is an example of AngularJS by linxiongmin@gmail.com</p>
+  <highchart id="chart1" config="vm.chartConfig" class="span9" ></highchart>
+</div>
+
+</body>
+</html>
+
